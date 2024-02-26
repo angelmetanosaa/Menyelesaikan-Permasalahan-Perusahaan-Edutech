@@ -4,10 +4,20 @@ import pickle
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
-# Load model dan skaler yang telah disimpan sebelumnya
-scaler = pickle.load(open('scaler.pkl', 'rb'))
-best_model = pickle.load(open('ANN_best_model.pkl', 'rb'))
+# Mendapatkan path ke direktori tempat file scaler.pkl dan ANN_best_model.pkl berada
+directory = os.path.dirname(__file__)
+scaler_path = os.path.join(directory, 'scaler.pkl')
+model_path = os.path.join(directory, 'ANN_best_model.pkl')
+
+# Memuat scaler dari file
+with open(scaler_path, 'rb') as scaler_file:
+    scaler = pickle.load(scaler_file)
+
+# Memuat model dari file
+with open(model_path, 'rb') as model_file:
+    best_model = pickle.load(model_file)
 
 # Fungsi untuk melakukan prediksi
 def predict_status(data):
