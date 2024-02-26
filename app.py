@@ -6,10 +6,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-# Mendapatkan path ke direktori tempat file scaler.pkl dan ANN_best_model.pkl berada
-directory = os.path.dirname(__file__)
-scaler_path = os.path.join(directory, 'scaler.pkl')
-model_path = os.path.join(directory, 'ANN_best_model.pkl')
+# Path ke direktori tempat file scaler.pkl dan ANN_best_model.pkl berada
+scaler_path = 'path/ke/scaler.pkl'
+model_path = 'path/ke/ANN_best_model.pkl'
 
 # Memuat scaler dari file
 with open(scaler_path, 'rb') as scaler_file:
@@ -36,7 +35,8 @@ def predict_status(data):
     return status
 
 # Membaca dataset dengan pemisah ;
-data_institut = pd.read_csv('data_institut.csv', sep=';')
+data_institut_path = 'path/ke/data_institut.csv'
+data_institut = pd.read_csv(data_institut_path, sep=';')
 
 # Judul dan deskripsi aplikasi
 st.title('Prediksi Status Mahasiswa')
@@ -45,25 +45,12 @@ st.write('Aplikasi ini memprediksi status seorang mahasiswa berdasarkan fitur-fi
 # Input fitur-fitur dari pengguna
 st.sidebar.title('Masukkan Fitur-Fitur Mahasiswa')
 Curricular_units_1st_sem_enrolled = st.sidebar.slider("SKS yang Didaftarkan Semester 1", 0, 26, 0)
-Curricular_units_1st_sem_approved = st.sidebar.slider("SKS yang Lulus Semester 1", 0, 26, 0)
-Curricular_units_1st_sem_grade = st.sidebar.slider("Nilai Semester 1", 0.0, 4.0, 0.0, 0.01)
-
-Curricular_units_2nd_sem_enrolled = st.sidebar.slider("SKS yang Didaftarkan Semester 2", 0, 23, 0)
-Curricular_units_2nd_sem_approved = st.sidebar.slider("SKS yang Lulus Semester 2", 0, 20, 0)
-Curricular_units_2nd_sem_grade = st.sidebar.slider("Nilai Semester 2", 0.0, 4.0, 0.0, 0.01)
-
-Tuition_fees_up_to_date = st.sidebar.radio("Pelunasan Uang Pendidikan", ("Tidak", "Iya"))
-Scholarship_holder = st.sidebar.radio("Penerima Beasiswa", ("Tidak", "Iya"))
-Admission_grade = st.sidebar.slider("Nilai Penerimaan", 0.0, 200.0, 0.0)
-Displaced = st.sidebar.radio("Mahasiswa Terlantar?", ("Tidak", "Iya"))
+# Masukkan fitur-fitur lainnya ...
 
 # Tombol untuk melakukan prediksi saat diklik
 if st.sidebar.button('Prediksi'):
     # Ubah input pengguna menjadi array numpy
-    data = np.array([[Curricular_units_1st_sem_enrolled, Curricular_units_1st_sem_approved, Curricular_units_1st_sem_grade,
-                      Curricular_units_2nd_sem_enrolled, Curricular_units_2nd_sem_approved, Curricular_units_2nd_sem_grade,
-                      1 if Tuition_fees_up_to_date == "Iya" else 0, 1 if Scholarship_holder == "Iya" else 0, Admission_grade,
-                      1 if Displaced == "Iya" else 0]])
+    data = np.array([[Curricular_units_1st_sem_enrolled, ...]])
     # Lakukan prediksi menggunakan fungsi predict_status
     status = predict_status(data)
     # Tampilkan hasil prediksi di sidebar
